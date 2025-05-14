@@ -1,38 +1,26 @@
 # Harrison's Website
 
-A minimal, text-based personal website with an interactive cursor cat.
-
-![Screenshot of Harrison's Website](screenshot.png)
+A minimal, text-based personal website with an interactive cursor pet.
 
 ## Features
 
 - **Minimalist Design**: Simple, clean, text-based layout
-- **Interactive Cursor Cat**: A cat follows your mouse cursor around the page
+- **Interactive Cursor Pet**: An eagle follows your mouse cursor around the page
 - **ASCII Art Gallery**: Beautiful ASCII art displayed in a gallery
 - **ASCII Art Generator**: Convert any image to ASCII art
 - **Responsive Design**: Works on desktop and mobile devices
 
-## Cursor Cat Controls
+## Cursor Pet Controls
 
-- **Move**: Move your mouse, and the cat will follow
-- **Sleep/Wake**: Press 'c' to toggle sleep mode for the cat
-- **Sleep Button**: Click the "Sleep Cat" button to make the cat sleep
+- **Move**: Move your mouse, and the eagle will follow
+- **Sleep/Wake**: Press 'p' to put the eagle to sleep or to wake it up
+- **Sleep Button**: OR, click the "Sleep Eagle" / "Wake Eagle" button to make the eagle sleep / wake up
 
-## Technologies Used
+## Tech Used
 
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
-
-## Getting Started
-
-To run this website locally:
-
-1. Clone this repository
-   ```
-   git clone https://github.com/harrison-web/harrison-web.git
-   ```
-2. Open `index.html` in your web browser
 
 ## Project Structure
 
@@ -55,19 +43,6 @@ The ASCII Art Generator converts images to ASCII art characters. For best result
 3. Upload your image to Imgur first, then use that URL
 4. Simple images with clear subjects work best
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- ASCII art inspired by traditional ASCII art communities
-- Special thanks to the monospace font family for making ASCII art possible
-
 ## Contact
 
-For questions or feedback, please reach out to: harrisonbusiness.official@gmail.com 
+For questions or feedback, please reach out to: EMAIL COMING SOON

@@ -37,6 +37,23 @@
     }
 }
 
+/* Custom class for dark mode when manually toggled */
+.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --accent-color: #bbb;
+    --link-color: #4db8ff;
+    --border-color: #444;
+    --pet-color: #D9D9D9;
+    --pet-accent: #ffc2c2;
+    --pet-dog-color: #B68E69;
+    --pet-dog-dark: #A67C52;
+    --retro-bg: #2a2a2a;
+    --retro-title: #4455aa;
+    --retro-border: #555555;
+    --retro-text: #f0f0f0;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -101,6 +118,16 @@ a:hover, a:focus {
 /* Header & Navigation */
 header {
     margin-bottom: 2rem;
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title-area {
+    flex: 1;
 }
 
 .subtitle {
@@ -311,43 +338,57 @@ footer {
     font-style: italic;
 }
 
-/* Retro Notification Styles */
+/* Retro Notification */
 .retro-notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 220px;
+    width: 250px;
     background-color: var(--retro-bg);
     border: 2px solid var(--retro-border);
-    border-radius: 0;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.2), inset 1px 1px 0 rgba(255,255,255,0.5);
-    z-index: 10000;
-    font-family: var(--mono-font);
-    font-size: 0.85rem;
-    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
     transition: opacity 0.3s;
+    z-index: 10000;
+    overflow: hidden;
+    font-size: 0.85rem;
 }
 
 .notification-title-bar {
     background-color: var(--retro-title);
     color: white;
-    padding: 3px 8px;
-    font-weight: bold;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    user-select: none;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
 .notification-close {
     cursor: pointer;
     font-size: 1.2rem;
-    line-height: 1;
 }
 
 .notification-content {
     padding: 10px;
     color: var(--retro-text);
+    font-size: 0.8rem;
+}
+
+/* Dark theme for retro notifications */
+.retro-notification.dark-theme {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+.retro-notification.dark-theme .notification-title-bar {
+    background-color: #4455aa;
+}
+
+.retro-notification.dark-theme .notification-content {
+    color: #f0f0f0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -382,58 +423,69 @@ footer {
     }
     
     .retro-notification {
-        width: 180px;
-        font-size: 0.8rem;
+        width: 160px;
+        font-size: 0.75rem;
+    }
+    
+    .notification-title-bar {
+        padding: 3px 6px;
+        font-size: 0.75rem;
+    }
+    
+    .notification-content {
+        padding: 8px;
+        font-size: 0.75rem;
     }
 }
 
 /* ASCII Art Gallery */
 .ascii-art-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .ascii-art {
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
     padding: 1rem;
     border-radius: 4px;
+    background-color: #f1f1f1;
+    border: 1px solid var(--border-color);
     transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     overflow: hidden;
 }
 
 .ascii-art:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .ascii-art h3 {
     margin-top: 0;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
 .ascii-art pre {
-    font-family: monospace, 'Courier New', Courier;
+    font-family: var(--mono-font);
     font-size: 0.8rem;
     line-height: 1.2;
-    white-space: pre;
+    overflow-x: auto;
     color: var(--text-color);
     margin: 0;
-    overflow: hidden;
+    white-space: pre;
 }
 
-@media (prefers-color-scheme: dark) {
-    .ascii-art {
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
-    .ascii-art:hover {
-        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    }
+/* Dark mode styles for ASCII art */
+.dark-mode .ascii-art,
+html[data-theme="dark"] .ascii-art {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.dark-mode .ascii-art:hover,
+html[data-theme="dark"] .ascii-art:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {

@@ -182,8 +182,16 @@ class CursorPet {
         // Get the ASCII art for the current pet, state, and frame
         const asciiArt = this.asciiPets[petType][state][frameIndex];
         
+        // Check if dark mode is active
+        const isDarkMode = document.documentElement.classList.contains('dark-mode') || 
+                         window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set color based on theme
+        const textColor = isDarkMode ? '#f0f0f0' : '#333';
+        const textShadow = isDarkMode ? '0 0 1px black' : '0 0 1px white';
+        
         // Update the element content without any background
-        this.options.element.innerHTML = `<pre style="color: #333; text-shadow: 0 0 1px white; margin: 0; padding: 0;">${asciiArt}</pre>`;
+        this.options.element.innerHTML = `<pre style="color: ${textColor}; text-shadow: ${textShadow}; margin: 0; padding: 0;">${asciiArt}</pre>`;
     }
 
     toggleSleep() {
@@ -384,10 +392,19 @@ class CursorPet {
             existingNotification.remove();
         }
         
+        // Check if dark mode is active
+        const isDarkMode = document.documentElement.classList.contains('dark-mode') || 
+                         window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
         // Create the notification window
         const notification = document.createElement('div');
         notification.id = 'pet-notification';
         notification.className = 'retro-notification';
+        
+        // Apply theme class if in dark mode
+        if (isDarkMode) {
+            notification.classList.add('dark-theme');
+        }
         
         // Create window title bar
         const titleBar = document.createElement('div');
