@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harrison's Site</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Harrison's Site</h1>
+            <p class="subtitle">A minimal place for thoughts and projects</p>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#ascii-gallery">ASCII Gallery</a></li>
+                <li><a href="#ascii-generator">ASCII Generator</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <section id="about">
+                <h2>About</h2>
+                <p>Hi, I'm Harrison.</p>
+                <p>This is a simple website thats simply made of words (mostly). No fancy animations, just plain old text.</p>
+                <p>I believe in simplicity, which is partly why I chose this design (and also its easier to make the website like this, don't tell anybody...).</p>
+            </section>
+            
+            <section id="writing">
+                <h2>Writing</h2>
+                <article>
+                    <h3>Simplicity</h3>
+                    <p class="date">May 13, 2025</p>
+                    <p>Lots of people now want more. More followers, more likes, more views, more time, more stimulation, more everything.</p>
+                    <p>But, as a wise man once said, "perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away".</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+                
+                <article>
+                    <h3>Digital Minimalism</h3>
+                    <p class="date">May 15, 2025</p>
+                    <p>In an age of constant notifications and information overload, there's value in creating spaces of digital calm.
+                       <p>Hopefully this website can be one of those spaces for you.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+            </section>
+            
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="project">
+                    <h3>Cursor Pet</h3>
+                    <p>A simple eagle that follows your cursor around the page. Press 'p' to toggle sleep mode.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+            </section>
+            <section id="ascii-gallery">
+                <h2>ASCII Art Gallery</h2>
+                <p>Here are some beautiful ASCII art examples. As a fan of minimalism, I find beauty in creating images using only text.</p>
+                
+                <div class="ascii-art-container">
+                    <div class="ascii-art">
+                        <h3>Eagle</h3>
+                        <pre>
+     .---.        .-----------
+     /     \  __  /    ------
+    / /     \(oo)/    -----
+   //////   ' \/ `   ---
+  //// / // :    : ---
+ // /   /  /`    '--
+//          //..\\
+       ====UU====UU====
+           '//||\\'
+             ''``
+        </pre>
+                    </div>
+                    <div class="ascii-art">
+                        <h3>Sleepy Eagle</h3>
+                        <pre>
+     .---.        .-----------
+     /     \  __  /    ------
+    / /     \(--)/    -----
+   //////   ' \/ `   ---
+  //// / // :    : ---
+ // /   /  /`    '--
+//          //..\\
+       ====UU====UU====
+           '//||\\'
+             ''``
+        </pre>
+                    </div>
+                    <div class="ascii-art">
+                        <h3>Flying Eagle</h3>
+                        <pre>
+                   /|_
+                  /   |_
+                 /  o  /
+                / o    ;
+               (^     ;
+              /      /
+             /     /
+            /      /
+         __/      \_____
+        /'             |
+         /     /-\     /
+        /      /  \--/
+       /     /
+      /      /  
+     (      ;
+    /      ;
+   /     _|
+  /  __/
+ /_/
+        </pre>
+                    </div>
+                </div>
+                
+                <p>You can also see a cursor eagle that follows your mouse around the page. Press 'p' to make the eagle sleep or wake up!</p>
+            </section>
+            
+            <section id="ascii-generator">
+                <h2>ASCII Art Generator</h2>
+                <p>Convert any image to ASCII art. Enter an image URL below:</p>
+                
+                <div class="ascii-generator-container">
+                    <div class="input-group">
+                        <input type="text" id="image-url" placeholder="Enter image URL">
+                        <button id="generate-ascii">Generate</button>
+                    </div>
+                    <div class="output-container">
+                        <pre id="ascii-output">Your ASCII art will appear here...</pre>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>You can reach me at <a href="mailto:harrisonbusiness.official@gmail.com">harrisonbusiness.official@gmail.com</a></p>
+                <p>Or find me on:</p>
+                <ul class="social">
+                    <li><a href="https://github.com/harrison-web/harrison-web" target="_blank">GitHub</a></li>
+                    <li><a href="#">Youtube</a></li>
+                </ul>
+            </section>
+        </main>
+        
+        <div class="pet-selector-section">
+            <p>Cursor Pet: <button id="change-pet" title="Press 'p' to toggle sleep mode">Sleep Eagle</button></p>
+            <p class="pet-tip">Tip: The eagle follows your cursor! Press 'p' to make it sleep or wake up.</p>
+        </div>
+        
+        <footer>
+            <p>© 2025 Harrison · Made with words · <a href="https://github.com/harrison-web/harrison-web" target="_blank">View on GitHub</a></p>
+            <p class="terminal-line">~ $ <span class="cursor">█</span></p>
+        </footer>
+    </div>
+    
+    <!-- Load scripts -->
+    <script src="cursor-pet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
