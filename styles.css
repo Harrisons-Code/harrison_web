@@ -10,8 +10,6 @@
     --line-height: 1.6;
     --pet-color: #D9D9D9;
     --pet-accent: #FF9D9D;
-    --pet-dog-color: #A67C52;
-    --pet-dog-dark: #8C5E37;
     --retro-bg: #c0c0c0;
     --retro-title: #000080;
     --retro-border: #808080;
@@ -28,8 +26,6 @@
         --border-color: #444;
         --pet-color: #D9D9D9;
         --pet-accent: #ffc2c2;
-        --pet-dog-color: #B68E69;
-        --pet-dog-dark: #A67C52;
         --retro-bg: #2a2a2a;
         --retro-title: #4455aa;
         --retro-border: #555555;
@@ -46,8 +42,6 @@
     --border-color: #444;
     --pet-color: #D9D9D9;
     --pet-accent: #ffc2c2;
-    --pet-dog-color: #B68E69;
-    --pet-dog-dark: #A67C52;
     --retro-bg: #2a2a2a;
     --retro-title: #4455aa;
     --retro-border: #555555;
@@ -73,7 +67,7 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 0.75rem 1rem 2rem;
 }
 
 /* Typography */
@@ -93,6 +87,7 @@ h2 {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
     margin-top: 2.5rem;
+    position: relative; /* For section pets */
 }
 
 h3 {
@@ -117,7 +112,7 @@ a:hover, a:focus {
 
 /* Header & Navigation */
 header {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .header-wrapper {
@@ -136,22 +131,34 @@ header {
 }
 
 nav {
-    margin: 2rem 0;
-    padding: 1rem 0;
+    margin: 1rem 0;
+    padding: 0.75rem 0;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
 
+/* Improved navbar styling */
 nav ul {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+nav li {
+    flex: 0 0 auto; /* Don't grow, don't shrink, auto basis */
+    text-align: center;
+    margin-bottom: 0.25rem;
 }
 
 nav a {
     font-family: var(--mono-font);
     color: var(--text-color);
     font-weight: 600;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
 }
 
 /* Main Content */
@@ -161,6 +168,23 @@ main {
 
 section {
     margin-bottom: 3rem;
+    position: relative;
+}
+
+/* Section Separator ASCII Art */
+.section-pet {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    font-family: var(--mono-font);
+    font-size: 0.7rem;
+    line-height: 1;
+    color: var(--accent-color);
+    z-index: 1;
+    white-space: pre;
+    text-align: right;
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 /* Writing Section */
@@ -190,6 +214,48 @@ article:last-child {
 /* Projects Section */
 .project {
     margin-bottom: 1.5rem;
+}
+
+/* Stuff I Use Section */
+.stuff-category {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.stuff-category:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.stuff-list {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.stuff-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.stuff-list li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+.stuff-list strong {
+    font-family: var(--mono-font);
+    color: var(--link-color);
+}
+
+@media (max-width: 480px) {
+    .stuff-list li {
+        padding-left: 0.75rem;
+        margin-bottom: 0.6rem;
+    }
 }
 
 /* Contact Section */
@@ -232,19 +298,32 @@ footer {
         font-size: 1.5rem;
     }
     
-    nav ul {
-        flex-direction: column;
-        gap: 0.75rem;
+    .section-pet {
+        font-size: 0.6rem;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 1.5rem 1rem;
+        padding: 0.5rem 1rem;
     }
     
     h1 {
         font-size: 1.75rem;
+    }
+    
+    .section-pet {
+        font-size: 0.5rem;
+        top: -10px;
+    }
+    
+    header {
+        margin-bottom: 0.75rem;
+    }
+    
+    nav {
+        margin: 0.75rem 0;
+        padding: 0.5rem 0;
     }
 }
 
@@ -341,18 +420,18 @@ footer {
 /* Retro Notification */
 .retro-notification {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
     background-color: var(--retro-bg);
     border: 2px solid var(--retro-border);
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 1;
-    transition: opacity 0.3s;
+    border-radius: 0;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2), inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
     z-index: 10000;
     overflow: hidden;
     font-size: 0.85rem;
+    font-family: 'Tahoma', 'Arial', sans-serif;
 }
 
 .notification-title-bar {
@@ -361,34 +440,117 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 8px;
-    font-size: 0.8rem;
+    padding: 3px 8px;
+    font-size: 0.75rem;
     font-weight: bold;
+}
+
+.notification-title-bar-icon {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 0.8rem;
 }
 
 .notification-close {
     cursor: pointer;
     font-size: 1.2rem;
+    line-height: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    background-color: var(--retro-bg);
+    border: 1px solid var(--retro-border);
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
+}
+
+.notification-close:hover {
+    background-color: #eee;
 }
 
 .notification-content {
-    padding: 10px;
+    padding: 12px;
     color: var(--retro-text);
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.notification-icon {
+    margin-right: 10px;
+    font-size: 2rem;
+}
+
+.notification-message {
+    flex: 1;
+    line-height: 1.4;
+}
+
+.notification-buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 12px 12px;
+    gap: 8px;
+}
+
+.notification-button {
+    background-color: var(--retro-bg);
+    border: 1px solid var(--retro-border);
+    box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #888 inset;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    cursor: pointer;
+}
+
+.notification-button:hover {
+    background-color: #eee;
+}
+
+.notification-button:active {
+    box-shadow: -1px -1px 0 #fff inset, 1px 1px 0 #888 inset;
+    transform: translateY(1px);
 }
 
 /* Dark theme for retro notifications */
 .retro-notification.dark-theme {
     background-color: #2a2a2a;
     border-color: #555;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4), inset 1px 1px 0 #555, inset -1px -1px 0 #222;
 }
 
 .retro-notification.dark-theme .notification-title-bar {
     background-color: #4455aa;
 }
 
+.retro-notification.dark-theme .notification-close {
+    background-color: #444;
+    border-color: #666;
+    box-shadow: inset 1px 1px 0 #555, inset -1px -1px 0 #222;
+}
+
+.retro-notification.dark-theme .notification-close:hover {
+    background-color: #555;
+}
+
 .retro-notification.dark-theme .notification-content {
     color: #f0f0f0;
+}
+
+.retro-notification.dark-theme .notification-button {
+    background-color: #444;
+    border-color: #666;
+    color: #f0f0f0;
+    box-shadow: 1px 1px 0 #555 inset, -1px -1px 0 #222 inset;
+}
+
+.retro-notification.dark-theme .notification-button:hover {
+    background-color: #555;
+}
+
+.retro-notification.dark-theme .notification-button:active {
+    box-shadow: -1px -1px 0 #555 inset, 1px 1px 0 #222 inset;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -423,7 +585,7 @@ footer {
     }
     
     .retro-notification {
-        width: 160px;
+        width: 280px;
         font-size: 0.75rem;
     }
     
@@ -449,8 +611,8 @@ footer {
 .ascii-art {
     padding: 1rem;
     border-radius: 4px;
-    background-color: #f1f1f1;
-    border: 1px solid var(--border-color);
+    background-color: #222;
+    border: 1px solid #444;
     transition: all 0.2s ease;
     overflow: hidden;
 }
@@ -471,35 +633,10 @@ footer {
     font-size: 0.8rem;
     line-height: 1.2;
     overflow-x: auto;
-    color: var(--text-color);
+    color: #fff;
     margin: 0;
     white-space: pre;
-}
-
-/* Dark mode styles for ASCII art */
-.dark-mode .ascii-art,
-html[data-theme="dark"] .ascii-art {
-    background-color: #2a2a2a;
-    border-color: #444;
-}
-
-.dark-mode .ascii-art:hover,
-html[data-theme="dark"] .ascii-art:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-@media (max-width: 768px) {
-    .ascii-art-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .ascii-art-container {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
+    text-shadow: 0 1px 2px #0008;
 }
 
 /* ASCII Art Generator */
@@ -588,4 +725,127 @@ html[data-theme="dark"] .ascii-art:hover {
     .output-container {
         min-height: 150px;
     }
+}
+
+/* Eagle status notifications in bottom right */
+.eagle-status-notification {
+    top: auto;
+    left: auto;
+    right: 20px;
+    bottom: 20px;
+    transform: none;
+    width: 250px;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+/* Hidden Cats */
+.hidden-cat {
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: help;
+    position: relative;
+}
+
+.hidden-cat:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    z-index: 1000;
+}
+
+/* Cat tooltips */
+.cat-tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+    pointer-events: none;
+    z-index: 1010;
+    font-family: var(--main-font);
+    min-width: max-content; /* Ensure text isn't cut off */
+}
+
+/* For edge peeker cat, position tooltip to the right instead */
+.edge-peeker .cat-tooltip {
+    left: 80px;
+    transform: none;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hidden-cat:hover .cat-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Extra sneaky cat */
+#hidden-cat-super-secret {
+    position: fixed;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.1;
+    transition: left 0.5s ease, opacity 0.5s ease;
+    z-index: 1001;
+    font-size: 12px;
+    color: var(--accent-color);
+    white-space: pre;
+    font-family: var(--mono-font);
+    pointer-events: none; /* Can be overridden by edge-peeker class */
+    margin: 0;
+    padding: 0;
+}
+
+/* The edge-peeker class specifically for the left-edge cat */
+.edge-peeker {
+    position: fixed !important; 
+    left: -30px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0.1;
+    transition: left 0.5s ease, opacity 0.5s ease;
+    z-index: 1001;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    width: auto;
+    pointer-events: auto !important; /* Make sure it can be clicked */
+    cursor: pointer !important;
+}
+
+body:hover #hidden-cat-super-secret {
+    left: 5px;
+    opacity: 0.7;
+}
+
+/* Perch eagle button */
+.pet-selector-section button {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    font-family: var(--mono-font);
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 3px;
+}
+
+.pet-selector-section button:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.perch-button {
+    margin-left: 0.5rem !important;
 } 

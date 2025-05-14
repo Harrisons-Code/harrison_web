@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Show Windows 95 style welcome popup for cursor pet
+    setTimeout(() => {
+        // Only show welcome popup if user hasn't previously chosen not to see it
+        if (localStorage.getItem('hideWelcomePopup') !== 'true') {
+            showWelcomePopup();
+        }
+    }, 1000);
+    
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -55,6 +63,436 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Full article for "${title}" would open here.`);
         });
     });
+    
+    // Set up hidden cats
+    setupHiddenCats();
+    
+    // Windows 95 style welcome popup function
+    function showWelcomePopup() {
+        // Remove any existing notifications
+        const existingNotification = document.getElementById('welcome-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Check if dark mode is active
+        const isDarkMode = document.documentElement.classList.contains('dark-mode') || 
+                         window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Create the notification window
+        const notification = document.createElement('div');
+        notification.id = 'welcome-notification';
+        notification.className = 'retro-notification';
+        
+        // Apply theme class if in dark mode
+        if (isDarkMode) {
+            notification.classList.add('dark-theme');
+        }
+        
+        // Create window title bar
+        const titleBar = document.createElement('div');
+        titleBar.className = 'notification-title-bar';
+        
+        const titleIcon = document.createElement('span');
+        titleIcon.className = 'notification-title-bar-icon';
+        titleIcon.innerHTML = '&#x1F4CD;'; // 📍 pushpin icon
+        
+        const title = document.createElement('span');
+        title.textContent = 'Welcome to Harrison\'s Site';
+        titleBar.appendChild(titleIcon);
+        titleBar.appendChild(title);
+        
+        const closeButton = document.createElement('span');
+        closeButton.className = 'notification-close';
+        closeButton.textContent = '×';
+        closeButton.addEventListener('click', () => {
+            notification.remove();
+        });
+        titleBar.appendChild(closeButton);
+        
+        notification.appendChild(titleBar);
+        
+        // Create content
+        const content = document.createElement('div');
+        content.className = 'notification-content';
+        
+        const icon = document.createElement('div');
+        icon.className = 'notification-icon';
+        icon.innerHTML = '&#x1F4A1;'; // 💡 light bulb icon
+        content.appendChild(icon);
+        
+        const message = document.createElement('div');
+        message.className = 'notification-message';
+        message.innerHTML = `
+            <p>Did you notice the eagle following your cursor?</p>
+            <p>You can press the <strong>'p'</strong> key to make it sleep or wake up.</p>
+            <p>Click the <strong>"Sleep Eagle"</strong> button at the bottom of the page.</p>
+            <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page. The eagle will only be visible when you scroll to the bottom.</p>
+            <p style="margin-top: 10px;">🐱 <strong>Cats Hunt:</strong> There are <strong>7 ASCII cats</strong> visible on section headers, and <strong>4 hidden cats</strong> lurking somewhere on this page. Can you find them all?</p>
+            <p style="font-size: 0.8em; font-style: italic;">Hint: Try clicking on the cats for more information!</p>
+        `;
+        content.appendChild(message);
+        
+        notification.appendChild(content);
+        
+        // Add buttons
+        const buttons = document.createElement('div');
+        buttons.className = 'notification-buttons';
+        
+        const okButton = document.createElement('button');
+        okButton.className = 'notification-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', () => {
+            notification.remove();
+        });
+        buttons.appendChild(okButton);
+        
+        notification.appendChild(buttons);
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Create a "never show again" checkbox option
+        const optionRow = document.createElement('div');
+        optionRow.style.display = 'flex';
+        optionRow.style.alignItems = 'center';
+        optionRow.style.padding = '0 12px 12px';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'dont-show-again';
+        checkbox.style.marginRight = '8px';
+        
+        const label = document.createElement('label');
+        label.htmlFor = 'dont-show-again';
+        label.textContent = 'Don\'t show this message again';
+        label.style.fontSize = '0.75rem';
+        
+        optionRow.appendChild(checkbox);
+        optionRow.appendChild(label);
+        notification.appendChild(optionRow);
+        
+        // Store in localStorage if user checks "don't show again"
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                localStorage.setItem('hideWelcomePopup', 'true');
+            } else {
+                localStorage.removeItem('hideWelcomePopup');
+            }
+        });
+        
+        return notification;
+    }
+    
+    // Function to set up hidden cats around the site
+    function setupHiddenCats() {
+        // Create hidden cats
+        const hiddenCats = [
+            {
+                position: 'bottom',
+                ascii: `
+ /\\_/\\
+( o w o)
+ (> < )
+                `,
+                styles: {
+                    position: 'fixed',
+                    bottom: '5px',
+                    right: '20px',
+                    fontSize: '10px',
+                    lineHeight: '1',
+                    color: 'var(--accent-color)',
+                    opacity: '0.7',
+                    pointerEvents: 'auto',
+                    zIndex: '999',
+                    transform: 'translateY(10px)',
+                    transition: 'transform 0.3s ease',
+                    cursor: 'help',
+                    whiteSpace: 'pre',
+                    fontFamily: 'monospace'
+                },
+                hoverText: 'Secret cat: Bottom Dweller',
+                description: 'This is the Bottom Dweller cat. It lurks in the depths of the page, always watching from below.'
+            },
+            {
+                position: 'header',
+                ascii: `^-.-^`,
+                styles: {
+                    position: 'absolute', 
+                    top: '5px',
+                    right: '10px',
+                    fontSize: '10px',
+                    lineHeight: '1',
+                    color: 'var(--accent-color)',
+                    opacity: '0.6',
+                    pointerEvents: 'auto',
+                    zIndex: '999',
+                    cursor: 'help',
+                    whiteSpace: 'pre',
+                    fontFamily: 'monospace'
+                },
+                hoverText: 'Secret cat: Header Hider',
+                description: 'Header Hider is a sneaky cat that hides in the top of the page. Very shy, but always watching.'
+            },
+            {
+                position: 'footer',
+                ascii: `
+   /\\___/\\
+  ( =\'.\' )
+~~~~(")_(")~~~~
+                `,
+                styles: {
+                    opacity: '0',
+                    position: 'absolute',
+                    bottom: '100%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontSize: '12px',
+                    lineHeight: '1',
+                    color: 'var(--accent-color)',
+                    pointerEvents: 'auto',
+                    whiteSpace: 'pre',
+                    fontFamily: 'monospace',
+                    transition: 'opacity 0.5s ease',
+                    zIndex: '999'
+                },
+                hoverText: 'Secret cat: Footer Floater',
+                description: 'This is the Footer Floater cat. It appears when you hover over the footer, floating above it like a gentle feline spirit.'
+            }
+        ];
+        
+        // Add hidden cats to the page
+        hiddenCats.forEach((cat, index) => {
+            const catElement = document.createElement('div');
+            catElement.className = 'hidden-cat';
+            catElement.id = `hidden-cat-${index}`;
+            catElement.innerHTML = `<pre>${cat.ascii}</pre>`;
+            
+            // Apply styles
+            Object.keys(cat.styles).forEach(style => {
+                catElement.style[style] = cat.styles[style];
+            });
+            
+            // Add tooltip
+            catElement.setAttribute('title', cat.hoverText);
+            
+            // Create a tooltip span element for better visibility
+            const tooltip = document.createElement('span');
+            tooltip.className = 'cat-tooltip';
+            tooltip.textContent = cat.hoverText;
+            catElement.appendChild(tooltip);
+            
+            // Add event listeners for the tooltip
+            catElement.addEventListener('mouseenter', () => {
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+            });
+            
+            catElement.addEventListener('mouseleave', () => {
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            });
+            
+            // Add click event to show Windows 95 popup
+            catElement.addEventListener('click', () => {
+                showCatPopup(cat.hoverText, cat.description);
+            });
+            
+            // Position the cat
+            if (cat.position === 'header') {
+                const header = document.querySelector('header');
+                if (header) {
+                    catElement.style.position = 'absolute';
+                    header.style.position = 'relative';
+                    header.appendChild(catElement);
+                } else {
+                    document.body.appendChild(catElement);
+                }
+            } else if (cat.position === 'footer') {
+                const footer = document.querySelector('footer');
+                if (footer) {
+                    footer.style.position = 'relative';
+                    footer.appendChild(catElement);
+                    
+                    // Make this cat appear on hover over footer
+                    footer.addEventListener('mouseenter', () => {
+                        catElement.style.opacity = '1';
+                    });
+                    
+                    footer.addEventListener('mouseleave', () => {
+                        catElement.style.opacity = '0';
+                    });
+                } else {
+                    document.body.appendChild(catElement);
+                }
+            } else {
+                document.body.appendChild(catElement);
+                
+                // Add scrolling effect to bottom cat
+                if (cat.position === 'bottom') {
+                    window.addEventListener('scroll', () => {
+                        const scrollY = window.scrollY;
+                        const maxScroll = document.body.scrollHeight - window.innerHeight;
+                        
+                        // Show the cat when near the bottom of the page
+                        if (scrollY > maxScroll - 300) {
+                            catElement.style.transform = 'translateY(0)';
+                        } else {
+                            catElement.style.transform = 'translateY(40px)';
+                        }
+                    });
+                }
+            }
+        });
+        
+        // Make the super secret cat work
+        const superSecretCat = document.getElementById('hidden-cat-super-secret');
+        if (superSecretCat) {
+            superSecretCat.style.pointerEvents = 'auto';
+            superSecretCat.setAttribute('title', 'Secret cat: Edge Peeker');
+            
+            // Create tooltip for super secret cat
+            const tooltip = document.createElement('span');
+            tooltip.className = 'cat-tooltip';
+            tooltip.textContent = 'Secret cat: Edge Peeker';
+            tooltip.style.width = 'auto'; // Ensure width accommodates the text
+            tooltip.style.whiteSpace = 'nowrap'; // Prevent text wrapping
+            
+            // Remove any existing tooltips to avoid duplicates
+            const existingTooltip = superSecretCat.querySelector('.cat-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+            
+            superSecretCat.appendChild(tooltip);
+            
+            // Add event listeners
+            superSecretCat.addEventListener('mouseenter', () => {
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+            });
+            
+            superSecretCat.addEventListener('mouseleave', () => {
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            });
+            
+            // Add click event to show Windows 95 popup
+            superSecretCat.addEventListener('click', () => {
+                showCatPopup('Edge Peeker', 'This is the Edge Peeker cat. It lurks at the edge of the screen, peeking in when you hover near the left side.');
+            });
+        }
+        
+        // Add click events for visible section cats
+        document.querySelectorAll('.section-pet').forEach((sectionPet, index) => {
+            sectionPet.style.pointerEvents = 'auto';
+            sectionPet.style.cursor = 'pointer';
+            
+            const catNames = [
+                'About Cat',
+                'Writing Cat',
+                'Projects Cat',
+                'Stuff I Use Cat',
+                'ASCII Gallery Cat',
+                'ASCII Generator Cat',
+                'Contact Cat'
+            ];
+            
+            const catDescriptions = [
+                'The wise About Cat watches over your bio section with sleepy eyes.',
+                'The Writing Cat oversees your articles with a friendly gaze.',
+                'The Projects Cat is excited about what you build!',
+                'The Stuff I Use Cat is curious about your tools and preferences.',
+                'The ASCII Gallery Cat loves art made with text characters.',
+                'The ASCII Generator Cat can turn any image into text art.',
+                'The Contact Cat helps visitors get in touch with you.'
+            ];
+            
+            // Use the index to determine which cat description to show
+            const name = catNames[index] || `Section Cat ${index + 1}`;
+            const description = catDescriptions[index] || 'A mysterious cat that guards this section of the page.';
+            
+            sectionPet.addEventListener('click', () => {
+                showCatPopup(name, description);
+            });
+        });
+        
+        // Secret: Add cat counter in console
+        console.log("%c🐱 Cat Hunt: Can you find all 11 ASCII cats on this page?", "color: #4db8ff; font-weight: bold; font-size: 14px;");
+    }
+    
+    // Function to show a Windows 95 style popup for cats
+    function showCatPopup(title, description) {
+        // Check if dark mode is active
+        const isDarkMode = document.documentElement.classList.contains('dark-mode') || 
+                         window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Create the notification window
+        const notification = document.createElement('div');
+        notification.id = 'cat-notification';
+        notification.className = 'retro-notification';
+        
+        // Apply theme class if in dark mode
+        if (isDarkMode) {
+            notification.classList.add('dark-theme');
+        }
+        
+        // Create window title bar
+        const titleBar = document.createElement('div');
+        titleBar.className = 'notification-title-bar';
+        
+        const titleIcon = document.createElement('span');
+        titleIcon.className = 'notification-title-bar-icon';
+        titleIcon.innerHTML = '&#x1F431;'; // 🐱 cat emoji
+        
+        const titleText = document.createElement('span');
+        titleText.textContent = title;
+        titleBar.appendChild(titleIcon);
+        titleBar.appendChild(titleText);
+        
+        const closeButton = document.createElement('span');
+        closeButton.className = 'notification-close';
+        closeButton.textContent = '×';
+        closeButton.addEventListener('click', () => {
+            notification.remove();
+        });
+        titleBar.appendChild(closeButton);
+        
+        notification.appendChild(titleBar);
+        
+        // Create content
+        const content = document.createElement('div');
+        content.className = 'notification-content';
+        
+        const icon = document.createElement('div');
+        icon.className = 'notification-icon';
+        icon.innerHTML = '&#x1F431;'; // 🐱 cat emoji
+        content.appendChild(icon);
+        
+        const message = document.createElement('div');
+        message.className = 'notification-message';
+        message.innerHTML = `<p>${description}</p>`;
+        content.appendChild(message);
+        
+        notification.appendChild(content);
+        
+        // Add buttons
+        const buttons = document.createElement('div');
+        buttons.className = 'notification-buttons';
+        
+        const okButton = document.createElement('button');
+        okButton.className = 'notification-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', () => {
+            notification.remove();
+        });
+        buttons.appendChild(okButton);
+        
+        notification.appendChild(buttons);
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+    }
     
     // ASCII Art Generator
     const imageUrlInput = document.getElementById('image-url');

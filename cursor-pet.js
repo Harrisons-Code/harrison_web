@@ -29,6 +29,7 @@ class CursorPet {
         this.currentState = this.states.idle;
         this.spriteOffset = 0;
         this.isSleeping = false;
+        this.isPerched = false; // New property for perched state
 
         // ASCII art for bird with flapping wings
         this.asciiPets = {
@@ -118,6 +119,28 @@ class CursorPet {
        ====UU====UU====
            '//||\\\\\'
              ''´´`
+                ],
+                perched: [
+                    `     .---.        .-----------
+     /     \\  __  /    ------
+    / /     \\(oo)/    -----
+   //////   ' \\/ \`   ---
+  //// / // :    : ---
+ // /   /  /\`    '--
+//          //..\\\\
+       ====UU====UU====
+           '//||\\\\\'
+             ''´´`,
+                    `     .---.        .-----------
+     /     \\  __  /    ------
+    / /     \\(oo)/    -----
+   //////   ' \\/ \`   ---
+  //// / // :    : ---
+ // /   /  /\`    '--
+//          //..\\\\
+       ====UU====UU====
+           '//||\\\\\'
+             ''´´`
                 ]
             }
         };
@@ -158,6 +181,7 @@ class CursorPet {
         
         // Add event listeners
         window.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        window.addEventListener('resize', this.handleResize.bind(this));
         
         // Set initial ASCII art
         this.updateAsciiArt();
@@ -172,6 +196,8 @@ class CursorPet {
         
         if (this.isSleeping) {
             state = 'sleeping';
+        } else if (this.isPerched) {
+            state = 'perched';
         } else {
             state = this.currentState === this.states.idle ? 'idle' : 'running';
         }
@@ -195,6 +221,11 @@ class CursorPet {
     }
 
     toggleSleep() {
+        // Can't sleep if perched
+        if (this.isPerched) {
+            return this.isSleeping;
+        }
+        
         this.isSleeping = !this.isSleeping;
         
         // Reset animation frame when transitioning to/from sleep
@@ -207,10 +238,98 @@ class CursorPet {
         return this.isSleeping;
     }
 
+    togglePerch() {
+        this.isPerched = !this.isPerched;
+        
+        // Can't be sleeping and perched at the same time
+        if (this.isPerched) {
+            this.isSleeping = false;
+        }
+        
+        // Reset animation frame when transitioning to/from perched state
+        this.animationFrame = 0;
+        this.frameCount = 0;
+        
+        if (this.isPerched) {
+            // Update the position to bottom of the page
+            this.updatePerchPosition();
+            
+            // Add scroll event listener when perched
+            window.addEventListener('scroll', this.handleScroll.bind(this));
+            
+            // Stop velocities
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            
+            // Show notification about perch behavior
+            this.showRetroNotification(`Eagle is now perched at the bottom of the page. Scroll down to see it!`);
+        } else {
+            // Remove scroll event listener when not perched
+            window.removeEventListener('scroll', this.handleScroll.bind(this));
+            
+            // Make sure the eagle is visible again
+            this.options.element.style.display = 'block';
+            
+            // Show notification about eagle being free
+            this.showRetroNotification(`Eagle is free to follow your cursor!`);
+        }
+        
+        // Update the ASCII art immediately
+        this.updateAsciiArt();
+        
+        return this.isPerched;
+    }
+
+    // New method to handle scrolling when perched
+    handleScroll() {
+        if (this.isPerched) {
+            this.updatePerchPosition();
+        }
+    }
+
+    // New method to update position when perched
+    updatePerchPosition() {
+        const windowWidth = window.innerWidth;
+        
+        // Get document height and scroll position
+        const docHeight = Math.max(
+            document.body.scrollHeight,
+            document.documentElement.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.offsetHeight,
+            document.body.clientHeight,
+            document.documentElement.clientHeight
+        );
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const scrollBottom = scrollTop + windowHeight;
+        
+        // Center horizontally, position at the bottom of the document
+        const x = windowWidth / 2;
+        const y = docHeight - 120; // Position above the footer
+        
+        // Update the position
+        this.updatePosition(x, y);
+        
+        // Check if user has scrolled to the bottom area of the page
+        const isNearBottom = scrollBottom > docHeight - 300; // Bottom 300px of the page
+        
+        // Show/hide the eagle based on scroll position
+        if (isNearBottom) {
+            this.options.element.style.display = 'block';
+        } else {
+            this.options.element.style.display = 'none';
+        }
+    }
+
     handleMouseMove(event) {
-        this.mousePosition.x = event.clientX;
-        this.mousePosition.y = event.clientY;
-        this.isMoving = true;
+        // Only track mouse if not perched
+        if (!this.isPerched) {
+            this.mousePosition.x = event.clientX;
+            this.mousePosition.y = event.clientY;
+            this.isMoving = true;
+        }
     }
     
     updatePosition(x, y) {
@@ -238,6 +357,13 @@ class CursorPet {
         }
         
         style.top = `${y + offsetY}px`;
+        
+        // When perched, use absolute positioning to attach to document
+        if (this.isPerched) {
+            style.position = 'absolute';
+        } else {
+            style.position = 'fixed'; // Keep using fixed positioning for normal mode
+        }
 
         // Adjust positioning to ensure the eagle is visible
         const windowWidth = window.innerWidth;
@@ -272,6 +398,21 @@ class CursorPet {
     }
     
     animate() {
+        // If perched, just do a slow idle animation and don't follow cursor
+        if (this.isPerched) {
+            // Continue animation loop for perched animation
+            requestAnimationFrame(this.animate.bind(this));
+            
+            // Update animation frame for perched animation (slower than idle)
+            this.frameCount++;
+            if (this.frameCount % 80 === 0) { // Very slow animation for perched
+                this.animationFrame++;
+                this.updateAsciiArt();
+            }
+            
+            return;
+        }
+        
         // If sleeping, don't move
         if (this.isSleeping) {
             // Continue animation loop for sleeping animation
@@ -399,7 +540,7 @@ class CursorPet {
         // Create the notification window
         const notification = document.createElement('div');
         notification.id = 'pet-notification';
-        notification.className = 'retro-notification';
+        notification.className = 'retro-notification eagle-status-notification';
         
         // Apply theme class if in dark mode
         if (isDarkMode) {
@@ -442,6 +583,14 @@ class CursorPet {
         
         return notification;
     }
+
+    // New method to handle window resize
+    handleResize() {
+        // If the eagle is perched, update its position when window is resized
+        if (this.isPerched) {
+            this.updatePerchPosition();
+        }
+    }
 }
 
 // Initialize when DOM is loaded
@@ -479,13 +628,42 @@ document.addEventListener('DOMContentLoaded', () => {
         pet.showRetroNotification(isSleeping ? `Eagle is now sleeping. Zzz...` : `Eagle woke up!`);
     };
     
-    // Connect the button to toggle sleep
+    // Function to toggle perch mode
+    const togglePerch = () => {
+        const isPerched = pet.togglePerch();
+        
+        // Update perch button text if it exists
+        const perchButton = document.getElementById('perch-eagle');
+        if (perchButton) {
+            perchButton.textContent = isPerched ? `Free Eagle` : `Perch Eagle`;
+        }
+        
+        // Update sleep button if needed
+        const sleepButton = document.getElementById('change-pet');
+        if (sleepButton && isPerched) {
+            sleepButton.textContent = `Sleep Eagle`;
+        }
+        
+        // Show retro notification
+        pet.showRetroNotification(isPerched ? `Eagle is now perched at the bottom of the page.` : `Eagle is free to follow your cursor!`);
+    };
+    
+    // Connect the sleep button
     const sleepButton = document.getElementById('change-pet');
     if (sleepButton) {
         sleepButton.addEventListener('click', toggleSleep);
         
         // Set initial button text
         sleepButton.textContent = `Sleep Eagle`;
+    }
+    
+    // Connect the perch button
+    const perchButton = document.getElementById('perch-eagle');
+    if (perchButton) {
+        perchButton.addEventListener('click', togglePerch);
+        
+        // Set initial button text
+        perchButton.textContent = `Perch Eagle`;
     }
     
     // Allow sleep toggle with keyboard shortcut - now using 'p' instead of 'c'
