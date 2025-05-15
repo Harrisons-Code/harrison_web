@@ -6,43 +6,18 @@ A minimal, text-based personal website with an interactive cursor pet.
 
 - **Minimalist Design**: Simple, clean, text-based layout
 - **Interactive Cursor Pet**: An eagle follows your mouse cursor around the page
-- **ASCII Art Gallery**: Beautiful ASCII art displayed in a gallery
-- **ASCII Art Generator**: Convert any image to ASCII art
-- **Responsive Design**: Works on desktop and mobile devices
+- **Writing**: 
+- **Projects**: Includes things like an interactive cursor pet (an eagle follows your mouse cursor around the page) and Meowmageddon (cats)
+- **Stuff I Use**: A section for software, hardware and other things I use
 
 ## Cursor Pet Controls
 
 - **Move**: Move your mouse, and the eagle will follow
-- **Sleep/Wake**: Press 'p' to put the eagle to sleep or to wake it up
-- **Sleep Button**: OR, click the "Sleep Eagle" / "Wake Eagle" button to make the eagle sleep / wake up
+- **Sleep/Wake**: Press 'e' to put the eagle to sleep or to wake it up OR, click the "Sleep Eagle" / "Wake Eagle" button to make the eagle sleep / wake up
+- **Perch**: Press 'p' to make the eagle perch at the bottom of the page (basically just eagle goes away) OR, press the "Perch eagle" / "Free eagle" button
 
 ## Tech Used
 
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
-
-## Project Structure
-
-```
-├── index.html       # Main HTML file
-├── styles.css       # Main stylesheet
-├── script.js        # General website functionality
-├── cursor-pet.js    # Cursor cat implementation
-├── .gitignore       # Git ignore file
-├── README.md        # This file
-└── github-setup.md  # Guide for setting up GitHub repository
-```
-
-## ASCII Art Generator
-
-The ASCII Art Generator converts images to ASCII art characters. For best results:
-
-1. Use square or landscape images
-2. Images with good contrast work better
-3. Upload your image to Imgur first, then use that URL
-4. Simple images with clear subjects work best
-
-## Contact
-
-For questions or feedback, please reach out to: EMAIL COMING SOON
