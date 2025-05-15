@@ -8,7 +8,8 @@ A minimal, text-based personal website with some cool features.
 - **Interactive Cursor Pet**: An eagle follows your mouse cursor around the page
 - **Writing**: Basically a blog (coming soon)
 - **Projects**: Includes things like an interactive cursor pet (an eagle follows your mouse cursor around the page), and Meowmageddon (cats)
-- **Stuff I Use**: A section for software, hardware and other things I use
+- **Stuff I Use**: A section for software, hardware and other things I use 
+- **Light/Dark mode**: There is a button in the top left of the page to switch between light and dark mode (the website was mainly designed for dark mode)
 
 ## Cursor Pet Controls
 
