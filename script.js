@@ -146,9 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Did you notice the eagle following your cursor?</p>
             <p>You can press the <strong>'e'</strong> key to make it sleep or wake up.</p>
             <p>Press the <strong>'p'</strong> key to make it perch at the bottom of the page.</p>
-            <p>Click the <strong>"Sleep Eagle"</strong> button at the bottom of the page.</p>
-            <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page. The eagle will only be visible when you scroll to the bottom.</p>
-            <p style="margin-top: 10px;">🐱 <strong>Meowmageddon:</strong> Click the <strong>"Meowmageddon"</strong> button at the bottom of the page to see what happens!</p>
+            <p>OR</p>
+            <p>Click the <strong>"Sleep Eagle"</strong> button in the projects section of the page.</p>
+            <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page.</p>
+            <p style="margin-top: 10px;">🐱 <strong>Meowmageddon:</strong> Click the <strong>"Meowmageddon"</strong> button in the projects section of the page and see what happens!</p>
         `;
         content.appendChild(message);
         
