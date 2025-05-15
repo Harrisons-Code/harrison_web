@@ -147,8 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>You can press the <strong>'e'</strong> key to make it sleep or wake up.</p>
             <p>Press the <strong>'p'</strong> key to make it perch at the bottom of the page.</p>
             <p>OR</p>
-            <p>Click the <strong>"Sleep Eagle"</strong> button in the projects section of the page.</p>
-            <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page.</p>
+            <p>Click the <strong>"Sleep Eagle"</strong> and <strong>"Perch Eagle"</strong> buttons in the projects section of the page to do the same thing.</p>
             <p style="margin-top: 10px;">🐱 <strong>Meowmageddon:</strong> Click the <strong>"Meowmageddon"</strong> button in the projects section of the page and see what happens!</p>
         `;
         content.appendChild(message);
