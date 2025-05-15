@@ -221,12 +221,17 @@ class CursorPet {
     }
 
     toggleSleep() {
+        console.log('Pet.toggleSleep called, current sleep state:', this.isSleeping);
+        
         // Can't sleep if perched
         if (this.isPerched) {
+            console.log('Cannot toggle sleep while perched');
             return this.isSleeping;
         }
         
+        // Toggle sleep state
         this.isSleeping = !this.isSleeping;
+        console.log('Sleep state toggled to:', this.isSleeping);
         
         // Reset animation frame when transitioning to/from sleep
         this.animationFrame = 0;
@@ -239,11 +244,16 @@ class CursorPet {
     }
 
     togglePerch() {
+        console.log('Pet.togglePerch called, current perch state:', this.isPerched);
+        
+        // Toggle perch state
         this.isPerched = !this.isPerched;
+        console.log('Perch state toggled to:', this.isPerched);
         
         // Can't be sleeping and perched at the same time
         if (this.isPerched) {
             this.isSleeping = false;
+            console.log('Sleep state reset to false while perched');
         }
         
         // Reset animation frame when transitioning to/from perched state
@@ -616,12 +626,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to toggle sleep mode
     const toggleSleep = () => {
+        console.log('toggleSleep function called');
         const isSleeping = pet.toggleSleep();
+        console.log('Eagle sleep state toggled, isSleeping:', isSleeping);
         
         // Update button text if it exists
         const sleepButton = document.getElementById('change-pet');
         if (sleepButton) {
             sleepButton.textContent = isSleeping ? `Wake Eagle` : `Sleep Eagle`;
+            console.log('Updated sleep button text to:', sleepButton.textContent);
         }
         
         // Show retro notification
@@ -630,18 +643,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to toggle perch mode
     const togglePerch = () => {
+        console.log('togglePerch function called');
         const isPerched = pet.togglePerch();
+        console.log('Eagle perch state toggled, isPerched:', isPerched);
         
         // Update perch button text if it exists
         const perchButton = document.getElementById('perch-eagle');
         if (perchButton) {
             perchButton.textContent = isPerched ? `Free Eagle` : `Perch Eagle`;
+            console.log('Updated perch button text to:', perchButton.textContent);
         }
         
         // Update sleep button if needed
         const sleepButton = document.getElementById('change-pet');
         if (sleepButton && isPerched) {
             sleepButton.textContent = `Sleep Eagle`;
+            console.log('Reset sleep button text because eagle is perched');
         }
         
         // Show retro notification
@@ -666,11 +683,9 @@ document.addEventListener('DOMContentLoaded', () => {
         perchButton.textContent = `Perch Eagle`;
     }
     
-    // Allow sleep toggle with keyboard shortcut - now using 'p' instead of 'c'
-    document.addEventListener('keydown', (event) => {
-        // Press 'p' to toggle sleep
-        if (event.key === 'p' || event.key === 'P') {
-            toggleSleep();
-        }
-    });
+    // Expose toggle functions globally for accessibility
+    window.eagleToggleSleep = toggleSleep;
+    window.eagleTogglePerch = togglePerch;
+    
+    // Note: keyboard shortcuts are now handled directly in script.js
 }); 

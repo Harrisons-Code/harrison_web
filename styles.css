@@ -189,6 +189,19 @@ nav li {
     margin-bottom: 0.25rem;
 }
 
+/* Adjust navigation for very small screens */
+@media (max-width: 400px) {
+    nav ul {
+        justify-content: center;
+        gap: 0.75rem;
+    }
+    
+    nav li {
+        flex: 0 0 auto;
+        min-width: 70px;
+    }
+}
+
 nav a {
     font-family: var(--mono-font);
     color: var(--text-color);
@@ -251,6 +264,30 @@ article:last-child {
 /* Projects Section */
 .project {
     margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.project:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Project controls for interactive elements like the cursor pet */
+.project-controls {
+    margin: 1.5rem 0 1rem;
+    padding: 1rem;
+    background-color: var(--ascii-bg);
+    border: 1px solid var(--ascii-border);
+    border-radius: 4px;
+}
+
+.project-controls p:first-child {
+    margin-top: 0;
+}
+
+.project-controls button {
+    margin-top: 0.5rem;
 }
 
 /* Stuff I Use Section */
@@ -421,7 +458,61 @@ footer {
     transition: height 0.05s ease-in-out;
 }
 
-/* Pet Selector Section */.pet-selector-section {    margin: 3rem 0 1.5rem;    padding-top: 1.5rem;    border-top: 1px solid var(--border-color);    font-family: var(--mono-font);    font-size: 0.85rem;}.pet-selector-section button {    background: var(--button-bg);    border: 1px solid var(--button-border);    color: var(--button-text);    font-family: var(--mono-font);    padding: 0.25rem 0.5rem;    margin-left: 0.5rem;    cursor: pointer;    transition: all 0.2s;    border-radius: 3px;}.pet-selector-section button:hover {    background: var(--button-hover-bg);}
+/* Pet Selector Section */
+.pet-selector-section {
+    margin: 3rem 0 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-family: var(--mono-font);
+    font-size: 0.85rem;
+}
+
+.pet-selector-section button {
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    color: var(--button-text);
+    font-family: var(--mono-font);
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 3px;
+}
+
+.pet-selector-section button:hover {
+    background: var(--button-hover-bg);
+}
+
+/* Responsive buttons for smaller screens */
+@media (max-width: 600px) {
+    .pet-selector-section p {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .pet-selector-section button {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        flex: 1;
+        min-width: 100px;
+        padding: 0.5rem;
+    }
+}
+
+/* Even smaller screens need stacked buttons */
+@media (max-width: 400px) {
+    .pet-selector-section p {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .pet-selector-section button {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
 
 .pet-tip {
     color: var(--accent-color);
@@ -706,7 +797,68 @@ footer {
     transition: opacity 0.3s;
 }
 
-/* Meowmageddon Styles */.meow-cat {    position: fixed;    z-index: 9999;    pointer-events: none;    user-select: none;    font-family: var(--mono-font);    white-space: pre;    line-height: 1;    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));    will-change: transform, left, top;    transition: transform 0.1s ease;}.light-mode .meow-cat {    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));}/* Meowmageddon Button */#meowmageddon-button {    background-color: var(--meowmageddon-button-bg) !important;    color: var(--meowmageddon-button-text) !important;    font-weight: bold;    border: 1px solid var(--meowmageddon-button-border) !important;    transition: all 0.2s ease !important;}#meowmageddon-button:hover {    background-color: var(--meowmageddon-button-hover) !important;    transform: scale(1.05);}/* Animation for stopping meowmageddon button */@keyframes panic {    0%, 100% { transform: translateX(0); }    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }    20%, 40%, 60%, 80% { transform: translateX(2px); }}#meowmageddon-button.stopping {    animation: panic 0.5s ease infinite;    background-color: #ff0000 !important;}
+/* Meowmageddon Styles */
+.meow-cat {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--mono-font);
+    white-space: pre;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    will-change: transform, left, top;
+    transition: transform 0.1s ease;
+}
+
+.light-mode .meow-cat {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Meowmageddon Button */
+.meowmageddon-button {
+    background-color: var(--meowmageddon-button-bg) !important;
+    color: var(--meowmageddon-button-text) !important;
+    font-weight: bold;
+    border: 1px solid var(--meowmageddon-button-border) !important;
+    transition: all 0.2s ease !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1.1rem !important;
+    text-align: center;
+    display: block;
+    margin: 1rem auto !important;
+    min-width: 200px;
+}
+
+.meowmageddon-button:hover {
+    background-color: var(--meowmageddon-button-hover) !important;
+    transform: scale(1.05);
+}
+
+/* Meowmageddon controls section */
+.meow-controls {
+    text-align: center;
+    padding: 1.5rem !important;
+    background-color: rgba(255, 0, 0, 0.05) !important;
+    border: 1px dashed var(--meowmageddon-button-border) !important;
+}
+
+.meow-controls .pet-tip {
+    color: var(--meowmageddon-button-bg);
+    font-weight: bold;
+}
+
+/* Animation for stopping meowmageddon button */
+@keyframes panic {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+#meowmageddon-button.stopping {
+    animation: panic 0.5s ease infinite;
+    background-color: #ff0000 !important;
+}
 
 /* Perch eagle button */
 

@@ -10,6 +10,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup theme toggle functionality
     setupThemeToggle();
     
+    // Add a global document-level keydown event listener for more reliable key binding
+    document.addEventListener('keydown', function(event) {
+        console.log('Key pressed:', event.key);
+        
+        // Press 'e' to toggle the eagle's sleep state
+        if (event.key === 'e' || event.key === 'E') {
+            console.log('E key pressed - toggling eagle sleep state');
+            const sleepButton = document.getElementById('change-pet');
+            if (sleepButton) {
+                sleepButton.click();
+            } else if (window.eagleToggleSleep) {
+                // Fallback to direct function call if button not found
+                window.eagleToggleSleep();
+            }
+        }
+        // Press 'p' to toggle eagle perch mode
+        else if (event.key === 'p' || event.key === 'P') {
+            console.log('P key pressed - toggling eagle perch mode');
+            const perchButton = document.getElementById('perch-eagle');
+            if (perchButton) {
+                perchButton.click();
+            } else if (window.eagleTogglePerch) {
+                // Fallback to direct function call if button not found
+                window.eagleTogglePerch();
+            }
+        }
+    });
+    
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -43,18 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Start the typewriter effect after a short delay
     setTimeout(typeWriter, 500);
-    
-    // Add global keydown listener for cursor pet
-    window.addEventListener('keydown', (event) => {
-        // This is a redundant backup for the keydown listener in cursor-pet.js
-        if (event.key === 'c' || event.key === 'C') {
-            // Try to find the sleep button and click it
-            const sleepButton = document.getElementById('change-pet');
-            if (sleepButton) {
-                sleepButton.click();
-            }
-        }
-    });
     
     // Add "Read more" functionality
     document.querySelectorAll('.read-more').forEach(link => {
@@ -128,7 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         message.className = 'notification-message';
         message.innerHTML = `
             <p>Did you notice the eagle following your cursor?</p>
-            <p>You can press the <strong>'p'</strong> key to make it sleep or wake up.</p>
+            <p>You can press the <strong>'e'</strong> key to make it sleep or wake up.</p>
+            <p>Press the <strong>'p'</strong> key to make it perch at the bottom of the page.</p>
             <p>Click the <strong>"Sleep Eagle"</strong> button at the bottom of the page.</p>
             <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page. The eagle will only be visible when you scroll to the bottom.</p>
             <p style="margin-top: 10px;">🐱 <strong>Meowmageddon:</strong> Click the <strong>"Meowmageddon"</strong> button at the bottom of the page to see what happens!</p>
