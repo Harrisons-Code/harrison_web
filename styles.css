@@ -1,38 +1,73 @@
 /* Base styles */
 :root {
-    --bg-color: #f8f8f8;
-    --text-color: #1a1a1a;
-    --accent-color: #444;
-    --link-color: #005b82;
-    --border-color: #ddd;
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --accent-color: #bbb;
+    --link-color: #4db8ff;
+    --border-color: #444;
     --mono-font: 'Courier New', Courier, monospace;
     --main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --line-height: 1.6;
     --pet-color: #D9D9D9;
+    --pet-accent: #ffc2c2;
+    --retro-bg: #2a2a2a;
+    --retro-title: #4455aa;
+    --retro-border: #555555;
+    --retro-text: #f0f0f0;
+    --button-bg: #333;
+    --button-text: #f0f0f0;
+    --button-hover-bg: #444;
+    --button-border: #555;
+    --ascii-bg: #222;
+    --ascii-text: #f0f0f0;
+    --ascii-border: #444;
+    --meowmageddon-button-bg: #ff6b6b;
+    --meowmageddon-button-hover: #ff4757;
+    --meowmageddon-button-border: #ff4757;
+    --meowmageddon-button-text: white;
+}
+
+/* Light mode support */
+.light-mode {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --accent-color: #444;
+    --link-color: #005b82;
+    --border-color: #ddd;
+    --pet-color: #555;
     --pet-accent: #FF9D9D;
     --retro-bg: #c0c0c0;
     --retro-title: #000080;
     --retro-border: #808080;
     --retro-text: #000000;
+    --button-bg: #e0e0e0;
+    --button-text: #1a1a1a;
+    --button-hover-bg: #d0d0d0;
+    --button-border: #cccccc;
+    --ascii-bg: #f0f0f0;
+    --ascii-text: #1a1a1a;
+    --ascii-border: #ddd;
 }
 
+/* Remove this since we're not using it anymore */
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
     :root {
-        --bg-color: #1a1a1a;
-        --text-color: #f0f0f0;
-        --accent-color: #bbb;
-        --link-color: #4db8ff;
-        --border-color: #444;
+        --bg-color: #ffffff;
+        --text-color: #1a1a1a;
+        --accent-color: #444;
+        --link-color: #005b82;
+        --border-color: #ddd;
         --pet-color: #D9D9D9;
-        --pet-accent: #ffc2c2;
-        --retro-bg: #2a2a2a;
-        --retro-title: #4455aa;
-        --retro-border: #555555;
-        --retro-text: #f0f0f0;
+        --pet-accent: #FF9D9D;
+        --retro-bg: #c0c0c0;
+        --retro-title: #000080;
+        --retro-border: #808080;
+        --retro-text: #000000;
     }
 }
 
+/* Remove this since we're not using it anymore */
 /* Custom class for dark mode when manually toggled */
 .dark-mode {
     --bg-color: #1a1a1a;
@@ -129,6 +164,8 @@ header {
     color: var(--accent-color);
     font-family: var(--mono-font);
 }
+
+/* Theme Toggle Button */.theme-toggle {    background: none;    font-size: 1.25rem;    cursor: pointer;    padding: 0.25rem;    margin-left: 1rem;    background-color: transparent;    color: var(--text-color);    border: 1px solid var(--border-color);    border-radius: 4px;    transition: background-color 0.2s, color 0.2s;}.theme-toggle:hover {    background-color: var(--border-color);}
 
 nav {
     margin: 1rem 0;
@@ -384,31 +421,7 @@ footer {
     transition: height 0.05s ease-in-out;
 }
 
-/* Pet Selector Section */
-.pet-selector-section {
-    margin: 3rem 0 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
-    font-family: var(--mono-font);
-    font-size: 0.85rem;
-}
-
-.pet-selector-section button {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--accent-color);
-    font-family: var(--mono-font);
-    padding: 0.25rem 0.5rem;
-    margin-left: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 3px;
-}
-
-.pet-selector-section button:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
-}
+/* Pet Selector Section */.pet-selector-section {    margin: 3rem 0 1.5rem;    padding-top: 1.5rem;    border-top: 1px solid var(--border-color);    font-family: var(--mono-font);    font-size: 0.85rem;}.pet-selector-section button {    background: var(--button-bg);    border: 1px solid var(--button-border);    color: var(--button-text);    font-family: var(--mono-font);    padding: 0.25rem 0.5rem;    margin-left: 0.5rem;    cursor: pointer;    transition: all 0.2s;    border-radius: 3px;}.pet-selector-section button:hover {    background: var(--button-hover-bg);}
 
 .pet-tip {
     color: var(--accent-color);
@@ -608,36 +621,7 @@ footer {
     margin-top: 1.5rem;
 }
 
-.ascii-art {
-    padding: 1rem;
-    border-radius: 4px;
-    background-color: #222;
-    border: 1px solid #444;
-    transition: all 0.2s ease;
-    overflow: hidden;
-}
-
-.ascii-art:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.ascii-art h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    color: var(--text-color);
-}
-
-.ascii-art pre {
-    font-family: var(--mono-font);
-    font-size: 0.8rem;
-    line-height: 1.2;
-    overflow-x: auto;
-    color: #fff;
-    margin: 0;
-    white-space: pre;
-    text-shadow: 0 1px 2px #0008;
-}
+.ascii-art {    padding: 1rem;    border-radius: 4px;    background-color: var(--ascii-bg);    border: 1px solid var(--ascii-border);    transition: all 0.2s ease;    overflow: hidden;}.ascii-art:hover {    transform: translateY(-5px);    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);}.ascii-art h3 {    margin-top: 0;    margin-bottom: 1rem;    color: var(--text-color);}.ascii-art pre {    font-family: var(--mono-font);    font-size: 0.8rem;    line-height: 1.2;    overflow-x: auto;    color: var(--ascii-text);    margin: 0;    white-space: pre;    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);}
 
 /* ASCII Art Generator */
 .ascii-generator-container {
@@ -659,19 +643,7 @@ footer {
     color: var(--text-color);
 }
 
-.input-group button {
-    background-color: var(--accent-color);
-    color: var(--bg-color);
-    border: none;
-    padding: 8px 16px;
-    font-family: var(--mono-font);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.input-group button:hover {
-    background-color: var(--link-color);
-}
+.input-group button {    background-color: var(--button-bg);    color: var(--button-text);    border: 1px solid var(--button-border);    padding: 8px 16px;    font-family: var(--mono-font);    cursor: pointer;    transition: background-color 0.2s;}.input-group button:hover {    background-color: var(--button-hover-bg);}
 
 .imgur-note {
     font-size: 0.85rem;
@@ -710,12 +682,7 @@ footer {
     font-weight: bold;
 }
 
-/* Higher contrast for ASCII in dark mode */
-@media (prefers-color-scheme: dark) {
-    #ascii-output {
-        text-shadow: 0 0 1px rgba(255,255,255,0.2);
-    }
-}
+/* Higher contrast for ASCII in dark mode */#ascii-output {    text-shadow: 0 0 1px rgba(255,255,255,0.2);}.light-mode #ascii-output {    text-shadow: none;}
 
 @media (max-width: 768px) {
     .input-group {
@@ -739,112 +706,9 @@ footer {
     transition: opacity 0.3s;
 }
 
-/* Hidden Cats */
-.hidden-cat {
-    opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    cursor: help;
-    position: relative;
-}
-
-.hidden-cat:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    z-index: 1000;
-}
-
-/* Cat tooltips */
-.cat-tooltip {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    white-space: nowrap;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.3s linear;
-    pointer-events: none;
-    z-index: 1010;
-    font-family: var(--main-font);
-    min-width: max-content; /* Ensure text isn't cut off */
-}
-
-/* For edge peeker cat, position tooltip to the right instead */
-.edge-peeker .cat-tooltip {
-    left: 80px;
-    transform: none;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.hidden-cat:hover .cat-tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Extra sneaky cat */
-#hidden-cat-super-secret {
-    position: fixed;
-    left: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.1;
-    transition: left 0.5s ease, opacity 0.5s ease;
-    z-index: 1001;
-    font-size: 12px;
-    color: var(--accent-color);
-    white-space: pre;
-    font-family: var(--mono-font);
-    pointer-events: none; /* Can be overridden by edge-peeker class */
-    margin: 0;
-    padding: 0;
-}
-
-/* The edge-peeker class specifically for the left-edge cat */
-.edge-peeker {
-    position: fixed !important; 
-    left: -30px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    opacity: 0.1;
-    transition: left 0.5s ease, opacity 0.5s ease;
-    z-index: 1001;
-    margin: 0;
-    padding: 0;
-    height: auto;
-    width: auto;
-    pointer-events: auto !important; /* Make sure it can be clicked */
-    cursor: pointer !important;
-}
-
-body:hover #hidden-cat-super-secret {
-    left: 5px;
-    opacity: 0.7;
-}
+/* Meowmageddon Styles */.meow-cat {    position: fixed;    z-index: 9999;    pointer-events: none;    user-select: none;    font-family: var(--mono-font);    white-space: pre;    line-height: 1;    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));    will-change: transform, left, top;    transition: transform 0.1s ease;}.light-mode .meow-cat {    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));}/* Meowmageddon Button */#meowmageddon-button {    background-color: var(--meowmageddon-button-bg) !important;    color: var(--meowmageddon-button-text) !important;    font-weight: bold;    border: 1px solid var(--meowmageddon-button-border) !important;    transition: all 0.2s ease !important;}#meowmageddon-button:hover {    background-color: var(--meowmageddon-button-hover) !important;    transform: scale(1.05);}/* Animation for stopping meowmageddon button */@keyframes panic {    0%, 100% { transform: translateX(0); }    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }    20%, 40%, 60%, 80% { transform: translateX(2px); }}#meowmageddon-button.stopping {    animation: panic 0.5s ease infinite;    background-color: #ff0000 !important;}
 
 /* Perch eagle button */
-.pet-selector-section button {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--accent-color);
-    font-family: var(--mono-font);
-    padding: 0.25rem 0.5rem;
-    margin-left: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 3px;
-}
-
-.pet-selector-section button:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
-}
 
 .perch-button {
     margin-left: 0.5rem !important;

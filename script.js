@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1000);
     
+    // Setup theme toggle functionality
+    setupThemeToggle();
+    
     // Smooth scrolling for navigation links
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -64,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Set up hidden cats
-    setupHiddenCats();
+    // Initialize Meowmageddon
+    setupMeowmageddon();
     
     // Windows 95 style welcome popup function
     function showWelcomePopup() {
@@ -128,8 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>You can press the <strong>'p'</strong> key to make it sleep or wake up.</p>
             <p>Click the <strong>"Sleep Eagle"</strong> button at the bottom of the page.</p>
             <p>Click the <strong>"Perch Eagle"</strong> button to make it stay at the bottom of the page. The eagle will only be visible when you scroll to the bottom.</p>
-            <p style="margin-top: 10px;">🐱 <strong>Cats Hunt:</strong> There are <strong>7 ASCII cats</strong> visible on section headers, and <strong>4 hidden cats</strong> lurking somewhere on this page. Can you find them all?</p>
-            <p style="font-size: 0.8em; font-style: italic;">Hint: Try clicking on the cats for more information!</p>
+            <p style="margin-top: 10px;">🐱 <strong>Meowmageddon:</strong> Click the <strong>"Meowmageddon"</strong> button at the bottom of the page to see what happens!</p>
         `;
         content.appendChild(message);
         
@@ -184,241 +186,423 @@ document.addEventListener('DOMContentLoaded', () => {
         return notification;
     }
     
-    // Function to set up hidden cats around the site
-    function setupHiddenCats() {
-        // Create hidden cats
-        const hiddenCats = [
-            {
-                position: 'bottom',
-                ascii: `
+    // Function to setup Meowmageddon
+    function setupMeowmageddon() {
+        // Create ASCII cat designs
+        const catDesigns = [
+            // Basic cat
+            `
  /\\_/\\
-( o w o)
- (> < )
-                `,
-                styles: {
-                    position: 'fixed',
-                    bottom: '5px',
-                    right: '20px',
-                    fontSize: '10px',
-                    lineHeight: '1',
-                    color: 'var(--accent-color)',
-                    opacity: '0.7',
-                    pointerEvents: 'auto',
-                    zIndex: '999',
-                    transform: 'translateY(10px)',
-                    transition: 'transform 0.3s ease',
-                    cursor: 'help',
-                    whiteSpace: 'pre',
-                    fontFamily: 'monospace'
-                },
-                hoverText: 'Secret cat: Bottom Dweller',
-                description: 'This is the Bottom Dweller cat. It lurks in the depths of the page, always watching from below.'
-            },
-            {
-                position: 'header',
-                ascii: `^-.-^`,
-                styles: {
-                    position: 'absolute', 
-                    top: '5px',
-                    right: '10px',
-                    fontSize: '10px',
-                    lineHeight: '1',
-                    color: 'var(--accent-color)',
-                    opacity: '0.6',
-                    pointerEvents: 'auto',
-                    zIndex: '999',
-                    cursor: 'help',
-                    whiteSpace: 'pre',
-                    fontFamily: 'monospace'
-                },
-                hoverText: 'Secret cat: Header Hider',
-                description: 'Header Hider is a sneaky cat that hides in the top of the page. Very shy, but always watching.'
-            },
-            {
-                position: 'footer',
-                ascii: `
-   /\\___/\\
-  ( =\'.\' )
-~~~~(")_(")~~~~
-                `,
-                styles: {
-                    opacity: '0',
-                    position: 'absolute',
-                    bottom: '100%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    fontSize: '12px',
-                    lineHeight: '1',
-                    color: 'var(--accent-color)',
-                    pointerEvents: 'auto',
-                    whiteSpace: 'pre',
-                    fontFamily: 'monospace',
-                    transition: 'opacity 0.5s ease',
-                    zIndex: '999'
-                },
-                hoverText: 'Secret cat: Footer Floater',
-                description: 'This is the Footer Floater cat. It appears when you hover over the footer, floating above it like a gentle feline spirit.'
-            }
+( o.o )
+ > ^ <
+            `,
+            // Happy cat
+            `
+ /\\_/\\
+(=^-^=)
+(")_(")
+            `,
+            // Sleeping cat
+            `
+ /\\_/\\
+( -.- )
+ (u u)~/*
+            `,
+            // Surprised cat
+            `
+  /\\_/\\  
+ ( *o* ) 
+  />_<\\  
+            `,
+            // Focused cat
+            `
+  /\\_/\\  
+ ( ·.· ) 
+  >-I-<  
+            `,
+            // Fuzzy cat
+            `
+^-.-^
+            `,
+            // Simple cat
+            `
+ /\\_/\\
+(='.'=)
+(")_(")
+            `,
+            // Evil cat
+            `
+ /| |\\
+( >.< )
+ > ^ <
+ ~~~~~
+            `
         ];
         
-        // Add hidden cats to the page
-        hiddenCats.forEach((cat, index) => {
-            const catElement = document.createElement('div');
-            catElement.className = 'hidden-cat';
-            catElement.id = `hidden-cat-${index}`;
-            catElement.innerHTML = `<pre>${cat.ascii}</pre>`;
-            
-            // Apply styles
-            Object.keys(cat.styles).forEach(style => {
-                catElement.style[style] = cat.styles[style];
-            });
-            
-            // Add tooltip
-            catElement.setAttribute('title', cat.hoverText);
-            
-            // Create a tooltip span element for better visibility
-            const tooltip = document.createElement('span');
-            tooltip.className = 'cat-tooltip';
-            tooltip.textContent = cat.hoverText;
-            catElement.appendChild(tooltip);
-            
-            // Add event listeners for the tooltip
-            catElement.addEventListener('mouseenter', () => {
-                tooltip.style.visibility = 'visible';
-                tooltip.style.opacity = '1';
-            });
-            
-            catElement.addEventListener('mouseleave', () => {
-                tooltip.style.visibility = 'hidden';
-                tooltip.style.opacity = '0';
-            });
-            
-            // Add click event to show Windows 95 popup
-            catElement.addEventListener('click', () => {
-                showCatPopup(cat.hoverText, cat.description);
-            });
-            
-            // Position the cat
-            if (cat.position === 'header') {
-                const header = document.querySelector('header');
-                if (header) {
-                    catElement.style.position = 'absolute';
-                    header.style.position = 'relative';
-                    header.appendChild(catElement);
-                } else {
-                    document.body.appendChild(catElement);
-                }
-            } else if (cat.position === 'footer') {
-                const footer = document.querySelector('footer');
-                if (footer) {
-                    footer.style.position = 'relative';
-                    footer.appendChild(catElement);
-                    
-                    // Make this cat appear on hover over footer
-                    footer.addEventListener('mouseenter', () => {
-                        catElement.style.opacity = '1';
-                    });
-                    
-                    footer.addEventListener('mouseleave', () => {
-                        catElement.style.opacity = '0';
-                    });
-                } else {
-                    document.body.appendChild(catElement);
-                }
-            } else {
-                document.body.appendChild(catElement);
-                
-                // Add scrolling effect to bottom cat
-                if (cat.position === 'bottom') {
-                    window.addEventListener('scroll', () => {
-                        const scrollY = window.scrollY;
-                        const maxScroll = document.body.scrollHeight - window.innerHeight;
-                        
-                        // Show the cat when near the bottom of the page
-                        if (scrollY > maxScroll - 300) {
-                            catElement.style.transform = 'translateY(0)';
-                        } else {
-                            catElement.style.transform = 'translateY(40px)';
-                        }
-                    });
-                }
-            }
-        });
+        // Variables to track cats
+        let cats = [];
+        let isRaining = false;
+        let animationFrameId = null;
+        let lastTime = 0;
+        let catRate = 100; // ms between cat spawns
+        let lastCatTime = 0;
         
-        // Make the super secret cat work
-        const superSecretCat = document.getElementById('hidden-cat-super-secret');
-        if (superSecretCat) {
-            superSecretCat.style.pointerEvents = 'auto';
-            superSecretCat.setAttribute('title', 'Secret cat: Edge Peeker');
-            
-            // Create tooltip for super secret cat
-            const tooltip = document.createElement('span');
-            tooltip.className = 'cat-tooltip';
-            tooltip.textContent = 'Secret cat: Edge Peeker';
-            tooltip.style.width = 'auto'; // Ensure width accommodates the text
-            tooltip.style.whiteSpace = 'nowrap'; // Prevent text wrapping
-            
-            // Remove any existing tooltips to avoid duplicates
-            const existingTooltip = superSecretCat.querySelector('.cat-tooltip');
-            if (existingTooltip) {
-                existingTooltip.remove();
-            }
-            
-            superSecretCat.appendChild(tooltip);
-            
-            // Add event listeners
-            superSecretCat.addEventListener('mouseenter', () => {
-                tooltip.style.visibility = 'visible';
-                tooltip.style.opacity = '1';
-            });
-            
-            superSecretCat.addEventListener('mouseleave', () => {
-                tooltip.style.visibility = 'hidden';
-                tooltip.style.opacity = '0';
-            });
-            
-            // Add click event to show Windows 95 popup
-            superSecretCat.addEventListener('click', () => {
-                showCatPopup('Edge Peeker', 'This is the Edge Peeker cat. It lurks at the edge of the screen, peeking in when you hover near the left side.');
+        // Create audio player for Meowmageddon
+        let audioPlayer = null;
+        
+        // Get reference to the Meowmageddon button
+        const meowButton = document.getElementById('meowmageddon-button');
+        if (meowButton) {
+            meowButton.addEventListener('click', () => {
+                if (!isRaining) {
+                    showConfirmationPopup();
+                } else {
+                    stopMeowmageddon();
+                }
             });
         }
         
-        // Add click events for visible section cats
-        document.querySelectorAll('.section-pet').forEach((sectionPet, index) => {
-            sectionPet.style.pointerEvents = 'auto';
-            sectionPet.style.cursor = 'pointer';
+        // Create YouTube Player for music
+        function createAudioPlayer() {
+            // Create a hidden container for the YouTube iframe
+            const audioContainer = document.createElement('div');
+            audioContainer.id = 'meowmageddon-audio';
+            audioContainer.style.position = 'fixed';
+            audioContainer.style.bottom = '0';
+            audioContainer.style.right = '0';
+            audioContainer.style.width = '10px';
+            audioContainer.style.height = '10px';
+            audioContainer.style.opacity = '0.01';
+            audioContainer.style.pointerEvents = 'none';
+            audioContainer.style.zIndex = '-1';
+            document.body.appendChild(audioContainer);
             
-            const catNames = [
-                'About Cat',
-                'Writing Cat',
-                'Projects Cat',
-                'Stuff I Use Cat',
-                'ASCII Gallery Cat',
-                'ASCII Generator Cat',
-                'Contact Cat'
-            ];
-            
-            const catDescriptions = [
-                'The wise About Cat watches over your bio section with sleepy eyes.',
-                'The Writing Cat oversees your articles with a friendly gaze.',
-                'The Projects Cat is excited about what you build!',
-                'The Stuff I Use Cat is curious about your tools and preferences.',
-                'The ASCII Gallery Cat loves art made with text characters.',
-                'The ASCII Generator Cat can turn any image into text art.',
-                'The Contact Cat helps visitors get in touch with you.'
-            ];
-            
-            // Use the index to determine which cat description to show
-            const name = catNames[index] || `Section Cat ${index + 1}`;
-            const description = catDescriptions[index] || 'A mysterious cat that guards this section of the page.';
-            
-            sectionPet.addEventListener('click', () => {
-                showCatPopup(name, description);
-            });
-        });
+            // Load YouTube IFrame API
+            if (!window.YT) {
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                
+                // Set up callback for when API is ready
+                window.onYouTubeIframeAPIReady = function() {
+                    createYouTubePlayer();
+                };
+            } else {
+                // YouTube API already loaded
+                createYouTubePlayer();
+            }
+        }
         
-        // Secret: Add cat counter in console
-        console.log("%c🐱 Cat Hunt: Can you find all 11 ASCII cats on this page?", "color: #4db8ff; font-weight: bold; font-size: 14px;");
+        // Create the actual YouTube player once API is loaded
+        function createYouTubePlayer() {
+            audioPlayer = new YT.Player('meowmageddon-audio', {
+                height: '10',
+                width: '10',
+                videoId: 'kpnW68Q8ltc', // YouTube video ID for the music
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+        
+        // Function called when player is ready
+        function onPlayerReady(event) {
+            // Player is ready but don't autoplay yet
+            // Check if Meowmageddon is already waiting for music
+            if (window.meowmageddonMusicPending && isRaining) {
+                event.target.playVideo();
+                window.meowmageddonMusicPending = false;
+            }
+        }
+        
+        // Handle player state changes
+        function onPlayerStateChange(event) {
+            // If the video ends but Meowmageddon is still active, restart it
+            if (event.data === YT.PlayerState.ENDED && isRaining) {
+                audioPlayer.playVideo();
+            }
+        }
+        
+        // Function to show a Windows 95 style confirmation popup
+        function showConfirmationPopup() {
+            // Check if dark mode is active
+            const isDarkMode = document.documentElement.classList.contains('dark-mode') || 
+                            window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Create the notification window
+            const notification = document.createElement('div');
+            notification.id = 'confirmation-notification';
+            notification.className = 'retro-notification';
+            
+            // Apply theme class if in dark mode
+            if (isDarkMode) {
+                notification.classList.add('dark-theme');
+            }
+            
+            // Create window title bar
+            const titleBar = document.createElement('div');
+            titleBar.className = 'notification-title-bar';
+            
+            const titleIcon = document.createElement('span');
+            titleIcon.className = 'notification-title-bar-icon';
+            titleIcon.innerHTML = '&#x1F431;'; // 🐱 cat emoji
+            
+            const title = document.createElement('span');
+            title.textContent = 'Meowmageddon';
+            titleBar.appendChild(titleIcon);
+            titleBar.appendChild(title);
+            
+            const closeButton = document.createElement('span');
+            closeButton.className = 'notification-close';
+            closeButton.textContent = '×';
+            closeButton.addEventListener('click', () => {
+                notification.remove();
+            });
+            titleBar.appendChild(closeButton);
+            
+            notification.appendChild(titleBar);
+            
+            // Create content
+            const content = document.createElement('div');
+            content.className = 'notification-content';
+            
+            const icon = document.createElement('div');
+            icon.className = 'notification-icon';
+            icon.innerHTML = '&#x26A0;'; // ⚠️ warning icon
+            content.appendChild(icon);
+            
+            const message = document.createElement('div');
+            message.className = 'notification-message';
+            message.innerHTML = `
+                <p>Are you sure you want to unleash the cats?</p>
+                <p style="margin-top: 10px;">Your screen will be filled with ASCII cats!</p>
+                <p style="font-size: 0.8em; font-style: italic; margin-top: 8px;">Click the button again to stop the madness.</p>
+                <p style="font-size: 0.8em; color: #ff4757;">Music will play during Meowmageddon!</p>
+            `;
+            content.appendChild(message);
+            
+            notification.appendChild(content);
+            
+            // Add buttons
+            const buttons = document.createElement('div');
+            buttons.className = 'notification-buttons';
+            
+            const cancelButton = document.createElement('button');
+            cancelButton.className = 'notification-button';
+            cancelButton.textContent = 'Cancel';
+            cancelButton.addEventListener('click', () => {
+                notification.remove();
+            });
+            buttons.appendChild(cancelButton);
+            
+            const confirmButton = document.createElement('button');
+            confirmButton.className = 'notification-button';
+            confirmButton.textContent = 'Unleash!';
+            confirmButton.addEventListener('click', () => {
+                notification.remove();
+                startMeowmageddon();
+            });
+            buttons.appendChild(confirmButton);
+            
+            notification.appendChild(buttons);
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+        }
+        
+        // Function to start the cat rain
+        function startMeowmageddon() {
+            if (isRaining) return;
+            
+            isRaining = true;
+            
+            // Update button text
+            const meowButton = document.getElementById('meowmageddon-button');
+            if (meowButton) {
+                meowButton.textContent = 'Stop Meowmageddon';
+                meowButton.title = 'Make it stop!';
+                meowButton.classList.add('stopping');
+            }
+            
+            // Start the music
+            if (!audioPlayer) {
+                // Create player if it doesn't exist yet
+                createAudioPlayer();
+                // We'll need to wait for the player to be ready before playing
+                window.meowmageddonMusicPending = true;
+            } else {
+                // Player exists, play the music
+                audioPlayer.playVideo();
+            }
+            
+            // Start the animation loop
+            lastTime = performance.now();
+            animationFrameId = requestAnimationFrame(animateCats);
+        }
+        
+        // Function to stop the cat rain
+        function stopMeowmageddon() {
+            isRaining = false;
+            
+            // Stop the animation loop
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            
+            // Stop the music
+            if (audioPlayer) {
+                audioPlayer.pauseVideo();
+            }
+            
+            // Update button text
+            const meowButton = document.getElementById('meowmageddon-button');
+            if (meowButton) {
+                meowButton.textContent = 'Meowmageddon';
+                meowButton.title = 'Unleash the cats!';
+                meowButton.classList.remove('stopping');
+            }
+            
+            // Remove all cats - more thorough cleanup
+            // First attempt with our tracked cats
+            cats.forEach(cat => {
+                if (cat.element && cat.element.parentNode) {
+                    cat.element.parentNode.removeChild(cat.element);
+                }
+            });
+            
+            // Second safety check - find and remove any cats that might have been missed
+            const allRemainingCats = document.querySelectorAll('.meow-cat');
+            allRemainingCats.forEach(catElement => {
+                if (catElement.parentNode) {
+                    catElement.parentNode.removeChild(catElement);
+                }
+            });
+            
+            // Clear the cats array
+            cats = [];
+        }
+        
+        // Function to create a new cat
+        function createCat() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Pick a random cat design
+            const design = catDesigns[Math.floor(Math.random() * catDesigns.length)];
+            
+            // Create cat element
+            const catElement = document.createElement('div');
+            catElement.className = 'meow-cat';
+            catElement.innerHTML = `<pre>${design}</pre>`;
+            
+            // Apply styles
+            Object.assign(catElement.style, {
+                position: 'fixed',
+                zIndex: '9999',
+                fontFamily: 'monospace, Courier New, Courier',
+                fontSize: `${8 + Math.random() * 8}px`,
+                lineHeight: '1',
+                color: `hsl(${Math.random() * 360}, 80%, 70%)`,
+                whiteSpace: 'pre',
+                pointerEvents: 'none',
+                userSelect: 'none',
+                textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                transform: 'rotate(' + (Math.random() * 40 - 20) + 'deg)'
+            });
+            
+            // Add cat to the page
+            document.body.appendChild(catElement);
+            
+            // Calculate random position and speed
+            const x = Math.random() * windowWidth;
+            const y = -100; // Start above the viewport
+            const speed = 50 + Math.random() * 150; // Pixels per second
+            const wobbleSpeed = Math.random() * 2 + 1; // Wobble speed
+            const wobbleAmount = Math.random() * 20 + 5; // Wobble amount
+            const baseX = x; // Store original x position for wobble
+            
+            // Add to cats array
+            cats.push({
+                element: catElement,
+                x: x,
+                y: y,
+                baseX: baseX,
+                speed: speed,
+                wobbleSpeed: wobbleSpeed,
+                wobbleAmount: wobbleAmount,
+                wobbleOffset: Math.random() * Math.PI * 2, // Random start phase
+                timestamp: performance.now()
+            });
+            
+            return catElement;
+        }
+        
+        // Function to animate cats
+        function animateCats(timestamp) {
+            if (!isRaining) return;
+            
+            const deltaTime = timestamp - lastTime;
+            lastTime = timestamp;
+            
+            // Create new cats at regular intervals
+            if (timestamp - lastCatTime > catRate) {
+                lastCatTime = timestamp;
+                createCat();
+                
+                // Gradually increase spawn rate (but not too much to avoid performance issues)
+                if (catRate > 25) {
+                    catRate *= 0.99;
+                }
+            }
+            
+            // Update existing cats
+            for (let i = cats.length - 1; i >= 0; i--) {
+                const cat = cats[i];
+                
+                // Update position
+                cat.y += (cat.speed * deltaTime) / 1000;
+                
+                // Wobble horizontally
+                const wobble = Math.sin((timestamp / 1000) * cat.wobbleSpeed + cat.wobbleOffset) * cat.wobbleAmount;
+                cat.x = cat.baseX + wobble;
+                
+                // Apply position
+                cat.element.style.left = `${cat.x}px`;
+                cat.element.style.top = `${cat.y}px`;
+                
+                // Remove if out of view
+                if (cat.y > window.innerHeight + 100) {
+                    if (cat.element.parentNode) {
+                        cat.element.parentNode.removeChild(cat.element);
+                    }
+                    cats.splice(i, 1);
+                    
+                    // If we have too many cats, increase minimum removal height
+                    if (cats.length > 150) {
+                        cats.splice(0, 10); // Remove the 10 oldest cats
+                    }
+                }
+            }
+            
+            // Continue animation loop
+            animationFrameId = requestAnimationFrame(animateCats);
+        }
+        
+        // Initialize the audio player at page load
+        // This pre-loads the YouTube API so it's ready when needed
+        createAudioPlayer();
     }
     
     // Function to show a Windows 95 style popup for cats
@@ -703,5 +887,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inputGroup && inputGroup.parentNode) {
             inputGroup.parentNode.insertBefore(imgurNote, inputGroup.nextSibling);
         }
+    }
+    
+    // Setup theme toggle functionality
+    function setupThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.documentElement; // Using HTML element for theme class
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.innerHTML = '&#9728;'; // Sun icon in light mode
+        } else {
+            body.classList.remove('light-mode');
+            themeToggle.innerHTML = '&#9790;'; // Moon icon in dark mode
+        }
+        
+        // Add click event to toggle theme
+        themeToggle.addEventListener('click', () => {
+            // Toggle light mode class
+            body.classList.toggle('light-mode');
+            
+            // Update button text and save preference
+            if (body.classList.contains('light-mode')) {
+                themeToggle.innerHTML = '&#9728;'; // Sun icon in light mode
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeToggle.innerHTML = '&#9790;'; // Moon icon in dark mode
+                localStorage.setItem('theme', 'dark');
+            }
+        });
     }
 }); 
