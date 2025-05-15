@@ -1,13 +1,13 @@
 # Harrison's Website
 
-A minimal, text-based personal website with an interactive cursor pet.
+A minimal, text-based personal website with some cool features.
 
 ## Features
 
 - **Minimalist Design**: Simple, clean, text-based layout
 - **Interactive Cursor Pet**: An eagle follows your mouse cursor around the page
-- **Writing**: 
-- **Projects**: Includes things like an interactive cursor pet (an eagle follows your mouse cursor around the page) and Meowmageddon (cats)
+- **Writing**: Basically a blog (coming soon)
+- **Projects**: Includes things like an interactive cursor pet (an eagle follows your mouse cursor around the page), and Meowmageddon (cats)
 - **Stuff I Use**: A section for software, hardware and other things I use
 
 ## Cursor Pet Controls
